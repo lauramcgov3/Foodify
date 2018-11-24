@@ -1,21 +1,4 @@
-from django.views.generic import DetailView, ListView, UpdateView, CreateView
-from .models import DaysOfTheWeek
-from .forms import DaysOfTheWeekForm
+from django.shortcuts import render
 
-
-class DaysOfTheWeekListView(ListView):
-    model = DaysOfTheWeek
-
-
-class DaysOfTheWeekCreateView(CreateView):
-    model = DaysOfTheWeek
-    form_class = DaysOfTheWeekForm
-
-
-class DaysOfTheWeekDetailView(DetailView):
-    model = DaysOfTheWeek
-
-
-class DaysOfTheWeekUpdateView(UpdateView):
-    model = DaysOfTheWeek
-    form_class = DaysOfTheWeekForm
+def post_list(request):
+    return render(request, 'foodifyapp/days_list.html', {})
