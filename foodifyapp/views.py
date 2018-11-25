@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from .models import DaysOfTheWeek
 
-def post_list(request):
-    return render(request, 'foodifyapp/days_list.html', {})
+def days_list(request):
+    days = DaysOfTheWeek.objects.all().order_by('pk')
+    return render(request, 'foodifyapp/days_list.html', {'days':days})
