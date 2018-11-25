@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_DIRS=[os.path.join(BASE_DIR, 'foodifyapp/templates')]
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -38,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'foodifyapp',
+    'oauth2_provider',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +60,7 @@ ROOT_URLCONF = 'foodify.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIRS],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -104,6 +111,29 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#OAuth Authenticators
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
+    'social_core.backends.google.GoogleOpenId',  # for Google authentication
+    'social_core.backends.google.GoogleOAuth2',  # for Google authentication
+    'social_core.backends.github.GithubOAuth2',  # for Github authentication
+    'social_core.backends.facebook.FacebookOAuth2',  # for Facebook authentication
+    'social_core.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+#Authentication keys
+
+SOCIAL_AUTH_GITHUB_KEY = '60fccc80d29ff64fd53b'
+SOCIAL_AUTH_GITHUB_SECRET = config('GITHUB_SECRET_KEY')
+SOCIAL_AUTH_TWITTER_KEY = '69991929-qkB2O5A0XxUZW9XhEWluTCZQQaLlPwVkjLh1DG4wD'
+SOCIAL_AUTH_TWITTER_SECRET = config('TWITTER_SECRET_KEY')
+SOCIAL_AUTH_FACEBOOK_KEY = '224548048269439'
+SOCIAL_AUTH_FACEBOOK_SECRET = config('FACEBOOK_SECRET_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '199229844292-5d6aoh2fpkh3luig4dv5lqshte2t2b6p.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('GOOGLE_SECRET_KEY')
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -123,3 +153,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
