@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        {% for day in days %}
+            {{ day.day }}
+        {% endfor %}
+    </div>
+{% endblock %}
+
