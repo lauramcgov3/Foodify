@@ -28,7 +28,7 @@ SECRET_KEY = 'tqc-5vg&%e3@ec1yv6o%a)n#q9nymg$qn66)eo+qok$bd1ajai'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "test.com"]
 
 
 # Application definition
@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'foodifyapp',
-    'oauth2_provider',
     'social_django',
 ]
 
@@ -118,8 +117,8 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOpenId',  # for Google authentication
     'social_core.backends.google.GoogleOAuth2',  # for Google authentication
     'social_core.backends.github.GithubOAuth2',  # for Github authentication
-    'social_core.backends.facebook.FacebookOAuth2',  # for Facebook authentication
-    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.twitter.TwitterOAuth',  # for Twitter authentication
+    'social_core.backends.facebook.FacebookOAuth2',  # For Facebook authentication
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -127,11 +126,11 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIAL_AUTH_GITHUB_KEY = '60fccc80d29ff64fd53b'
 SOCIAL_AUTH_GITHUB_SECRET = config('GITHUB_SECRET_KEY')
-SOCIAL_AUTH_TWITTER_KEY = '69991929-qkB2O5A0XxUZW9XhEWluTCZQQaLlPwVkjLh1DG4wD'
+SOCIAL_AUTH_TWITTER_KEY = 'XrgTeoAI2tfDp0XnQqqroCVNg'
 SOCIAL_AUTH_TWITTER_SECRET = config('TWITTER_SECRET_KEY')
 SOCIAL_AUTH_FACEBOOK_KEY = '224548048269439'
 SOCIAL_AUTH_FACEBOOK_SECRET = config('FACEBOOK_SECRET_KEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '199229844292-5d6aoh2fpkh3luig4dv5lqshte2t2b6p.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '199229844292-rmcpj31ka7s8m0st5m3isj5ulm79sca4.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('GOOGLE_SECRET_KEY')
 
 
