@@ -55,9 +55,7 @@ def edit_recipe(request, pk):
 
 
 def delete_recipe(request, pk):
-    print(pk)
     recipe = get_object_or_404(Recipe, pk=pk)
-    print(recipe)
     if request.method == "POST":
         form = RecipeForm(request.POST, instance=recipe)
         if form.is_valid():
