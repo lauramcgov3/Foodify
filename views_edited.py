@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from .forms import SignUpForm, RecipeForm
+from .forms import SignUpForm, RecipeForm, CustomRecipeForm
 from .models import Recipe
 
 
@@ -43,17 +43,35 @@ def recipe_list(request):
 @login_required
 def edit_recipe(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
+    payload = None
     if request.method == "POST":
-        form = RecipeForm(request.POST, instance=recipe)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.save()
-            return redirect('recipe_list')
+        if 'master' in request.method:
+            payload = update_master_recipe(request, recipe)
+        else:
+            payload = update_custom_recipe(request, recipe)
+
     else:
-        form = RecipeForm(instance=recipe)
-    return render(request, 'foodifyapp/recipe_edit.html', {'form': form})
+        payload = {'form': RecipeForm(instance=recipe)}
+    return render(request, 'foodifyapp/recipe_edit.html', payload)
 
 
+def update_master_recipe(request, recipe):
+    form = RecipeForm(request.POST, instance=recipe)
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.save()
+        return redirect('recipe_list')
+
+
+def update_custom_recipe(request, recipe):
+    form = CustomRecipeForm(request.POST, instance=recipe)
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.save()
+        return redirect('recipe_list')
+
+
+@login_required
 def delete_recipe(request, pk):
     print(pk)
     recipe = get_object_or_404(Recipe, pk=pk)

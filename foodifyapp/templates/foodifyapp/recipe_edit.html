@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    <h2>Customise recipe</h2>
+    <form method="POST" class="recipe-form">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="checkbox" name="update_master" value="master" checked> Update master <br>
+        <button type="submit">Save</button>
+    </form>
+</div>
+<div>
+    <a href="{% url 'home' %}">Return home</a>
+</div>
+
+{% endblock %}

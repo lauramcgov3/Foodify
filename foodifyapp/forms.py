@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Recipe
+from .models import Recipe, CustomRecipes
 
 
 CATEGORY_CHOICES = [
@@ -36,3 +36,9 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = ('name', 'servings', 'ingredients', 'method', 'category')
+
+
+class CustomRecipeForm(forms.ModelForm):
+    class Meta:
+        model = CustomRecipes
+        fields = ('name', 'servings', 'ingredients', 'method', 'category', 'user')
