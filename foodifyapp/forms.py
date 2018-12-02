@@ -1,6 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Recipe
+
+
+CATEGORY_CHOICES = [
+    ('breakfast', 'Breakfast'),
+    ('lunch', 'Lunch'),
+    ('dinner', 'Dinner')
+]
 
 
 class SignUpForm(UserCreationForm):
@@ -19,3 +27,12 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+
+
+class RecipeForm(forms.ModelForm):
+
+    category = forms.CharField(label='Select a category', widget=forms.Select(choices=CATEGORY_CHOICES))
+
+    class Meta:
+        model = Recipe
+        fields = ('name', 'servings', 'ingredients', 'method', 'category')

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    <h2>All Recipes</h2>
+    <p>
+        {% for recipe in recipes %}
+        <br>
+            {{ recipe.name }}<br>
+            {{ recipe.servings }} <br>
+            {{ recipe.ingredients }} <br>
+            {{ recipe.method}} <br>
+            {{ recipe.category}} <br>
+        {% endfor %}
+    </p>
+</div>
+<div>
+    <a href="{% url 'home' %}">Return home</a>
+</div>
+
+{% endblock %}

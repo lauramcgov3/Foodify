@@ -1,14 +1,32 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import DaysOfTheWeek
 from django.contrib.auth import login, authenticate
-from foodifyapp.forms import SignUpForm
+from .forms import SignUpForm, RecipeForm
+from .models import Recipe
+
 
 @login_required
 def home(request):
-    days = DaysOfTheWeek.objects.all().order_by('pk')
-    return render(request, 'foodifyapp/home.html', {'days': days})
+    return render(request, 'foodifyapp/home.html')
 
+
+@login_required
+def new_recipe(request):
+    if request.method == "POST":
+        form = RecipeForm(request.POST)
+        post = form.save(commit=False)
+        post.save()
+        return redirect('recipe_list')
+    else:
+        form = RecipeForm()
+    return render(request, 'foodifyapp/new_recipe.html', {'form': form})
+
+
+@login_required
+def recipe_list(request):
+    if request.method == 'GET':
+        recipes = Recipe.objects.values('name', 'servings', 'ingredients', 'method', 'category')
+    return render(request, 'foodifyapp/recipe_list.html', {'recipes': recipes})
 
 
 def signup(request):
@@ -24,3 +42,4 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'foodifyapp/signup.html', {'form': form})
+
