@@ -29,13 +29,12 @@ def recipe_list(request):
         recipes = Recipe.objects.values('pk', 'name', 'servings', 'ingredients', 'method', 'category')
         clean_recipes = [recipe for recipe in recipes]
 
+        # This will be important for the shopping list!
         ingredients = []
         for recipe in clean_recipes:
             for ingredient in recipe['ingredients']:
                 if ingredient not in ingredients:
                     ingredients.append(ingredient)
-
-        print(ingredients)
 
     return render(request, 'foodifyapp/recipe_list.html', {'recipes': clean_recipes})
 
@@ -44,11 +43,19 @@ def recipe_list(request):
 def edit_recipe(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     if request.method == "POST":
+
+        results = dict(request.POST)
+        values = results.values()
+        for i in values:
+            if "master" in i:
+                print(i)
+
         form = RecipeForm(request.POST, instance=recipe)
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
             return redirect('recipe_list')
+
     else:
         form = RecipeForm(instance=recipe)
     return render(request, 'foodifyapp/recipe_edit.html', {'form': form})

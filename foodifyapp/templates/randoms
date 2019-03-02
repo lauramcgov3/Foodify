@@ -1,0 +1,16 @@
+@login_required
+def edit_master(request, pk):
+    print("Edit master")
+    print(request, pk)
+
+    recipe = get_object_or_404(Recipe, pk=pk)
+
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, instance=recipe)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('recipe_list')
+def customise(request, pk):
+    print("Custom")
+    print(request, pk)
