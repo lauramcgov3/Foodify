@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<sp><h1>Set up your family to get started!</h1></sp>
+
+<h2>New family</h2>
+<form method="POST" class="family-form">{% csrf_token %}
+    <p> Family name: {{ form.familyName }}
+        {% if form.familyName.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in form.familyName.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    </p>
+    <button type="submit" class="save btn btn-default">Save</button>
+</form>
+
+
+{% endblock %}

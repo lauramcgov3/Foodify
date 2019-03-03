@@ -15,16 +15,22 @@ class Family(models.Model):
 
 class FamilyMembers(models.Model):
 
+    yesOrNo = (
+        ('Yes', 'Yes'),
+        ('No', 'No'),
+    )
+
     # Fields
-    Admin = models.BooleanField()
+    Admin = models.CharField(max_length=3, choices=yesOrNo)
     Name = models.CharField(max_length=30)
     Email = models.EmailField()
 
     # Relationship Fields
     familyName = models.ForeignKey(
         'Family',
-        on_delete=models.CASCADE, related_name="users",
+        on_delete=models.CASCADE, related_name="familyMembers",
     )
+
 
     class Meta:
         ordering = ('-pk',)
